@@ -11,6 +11,8 @@ set -eu
 REPO="joelsommerer/orbit-code-releases"
 APP="Orbit (Beta).app"
 PROCESS="Orbit (Beta)"
+# pgrep reads a pattern; the brackets in the name must not count as a regex group.
+PROCESS_PATTERN='Orbit \(Beta\)'
 
 say() { printf '%s\n' "$*"; }
 fail() {
@@ -49,15 +51,15 @@ else
     mkdir -p "$dest"
   fi
   # A running Orbit would crash when its files are replaced.
-  if pgrep -xq "$PROCESS"; then
+  if pgrep -xq "$PROCESS_PATTERN"; then
     say "Quitting Orbit Code to update it..."
     osascript -e "quit app \"$PROCESS\"" >/dev/null 2>&1 || true
     waited=0
-    while pgrep -xq "$PROCESS" && [ "$waited" -lt 30 ]; do
+    while pgrep -xq "$PROCESS_PATTERN" && [ "$waited" -lt 30 ]; do
       sleep 1
       waited=$((waited + 1))
     done
-    pgrep -xq "$PROCESS" && fail "Orbit Code is still running. Quit it and run the installer again."
+    pgrep -xq "$PROCESS_PATTERN" && fail "Orbit Code is still running. Quit it and run the installer again."
   fi
 fi
 
