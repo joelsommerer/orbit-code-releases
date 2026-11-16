@@ -17,8 +17,10 @@ Am einfachsten im Terminal einfügen. Das lädt die neueste Version, legt sie in
 curl -fsSL https://joelsommerer.github.io/orbit-code-releases/install.sh | sh
 ```
 
-Von Hand: Unter [Releases](../../releases/latest) `Orbit-<version>-arm64.zip` laden, entpacken,
-`Orbit (Beta).app` in **Programme** ziehen und einmal freigeben, weil die App nicht signiert ist:
+Von Hand: Unter [Releases](../../releases/latest) `Orbit-<version>-arm64.zip` laden, entpacken und
+`Orbit (Beta).app` in **Programme** ziehen. Beim ersten Öffnen warnt macOS, weil die App noch nicht
+von Apple signiert ist: **Systemeinstellungen → Datenschutz & Sicherheit → Dennoch öffnen**.
+Oder einmal im Terminal:
 
 ```bash
 xattr -dr com.apple.quarantine "/Applications/Orbit (Beta).app"
