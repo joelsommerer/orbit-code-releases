@@ -18,9 +18,9 @@ curl -fsSL https://joelsommerer.github.io/orbit-code-releases/install.sh | sh
 ```
 
 Von Hand: Unter [Releases](../../releases/latest) `Orbit-<version>-arm64.zip` laden, entpacken und
-`Orbit (Beta).app` in **Programme** ziehen. Beim ersten Öffnen warnt macOS, weil die App noch nicht
-von Apple signiert ist: **Systemeinstellungen → Datenschutz & Sicherheit → Dennoch öffnen**.
-Oder einmal im Terminal:
+`Orbit (Beta).app` in **Programme** ziehen. Vor dem ersten Öffnen einmal im Terminal freigeben.
+Ohne diesen Schritt meldet macOS, die App sei **beschädigt**. Sie ist es nicht: Die App ist noch
+nicht von Apple signiert, und macOS blockiert solche Downloads aus dem Browser.
 
 ```bash
 xattr -dr com.apple.quarantine "/Applications/Orbit (Beta).app"

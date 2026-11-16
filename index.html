@@ -422,7 +422,8 @@
               <ol class="steps" style="margin-top: 0.75rem">
                 <li><a href="https://github.com/joelsommerer/orbit-code-releases/releases/latest">Neueste Version</a> laden und entpacken.</li>
                 <li><code>Orbit (Beta).app</code> in <em>Programme</em> ziehen.</li>
-                <li>Beim ersten Öffnen warnt macOS, weil die App noch nicht von Apple signiert ist. Öffne <em>Systemeinstellungen → Datenschutz &amp; Sicherheit</em> und klicke bei Orbit auf <strong>Dennoch öffnen</strong>. Oder einmal im Terminal: <code>xattr -dr com.apple.quarantine "/Applications/Orbit (Beta).app"</code></li>
+                <li>Vor dem ersten Öffnen einmal im Terminal freigeben: <code>xattr -dr com.apple.quarantine "/Applications/Orbit (Beta).app"</code></li>
+                <li>Ohne diesen Schritt meldet macOS, die App sei <strong>beschädigt</strong>. Sie ist es nicht: Die App ist noch nicht von Apple signiert, und macOS blockiert solche Downloads aus dem Browser.</li>
               </ol>
             </div>
           </div>
