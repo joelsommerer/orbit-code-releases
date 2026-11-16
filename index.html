@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orbit Code</title>
+    <meta
+      name="description"
+      content="Orbit Code: Mission Control für deine Coding-Agenten. Claude Code, Codex und mehr in einer App für den Mac."
+    />
+    <link rel="icon" href="assets/orbit-icon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --bg: #070914;
+        --surface: #10142a;
+        --surface-2: #161b38;
+        --line: rgba(255, 255, 255, 0.09);
+        --text: #eef0fa;
+        --muted: #9aa1c2;
+        --accent: #5b8cff;
+        --accent-2: #8b6bff;
+        --ok: #3ccf91;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(60rem 30rem at 15% -10%, rgba(91, 140, 255, 0.22), transparent 70%),
+          radial-gradient(50rem 30rem at 100% 10%, rgba(139, 107, 255, 0.16), transparent 70%),
+          var(--bg);
+        color: var(--text);
+        font:
+          16px/1.6 ui-sans-serif,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+      }
+      .wrap {
+        width: min(72rem, 100% - 2rem);
+        margin-inline: auto;
+      }
+      header.top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-weight: 650;
+        text-decoration: none;
+      }
+      .brand img {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.5rem;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        margin-left: 1.25rem;
+        font-size: 0.95rem;
+      }
+      nav a:hover {
+        color: var(--text);
+      }
+      .hero {
+        text-align: center;
+        padding: 4rem 0 2.5rem;
+      }
+      .hero img.logo {
+        width: 5.5rem;
+        height: 5.5rem;
+        border-radius: 1.25rem;
+        box-shadow: 0 1rem 3rem rgba(91, 140, 255, 0.35);
+      }
+      h1 {
+        font-size: clamp(2.4rem, 6vw, 4.2rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        margin: 1.5rem 0 0.75rem;
+      }
+      .lead {
+        color: var(--muted);
+        font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+        max-width: 40rem;
+        margin: 0 auto;
+      }
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.85rem 1.4rem;
+        border-radius: 0.8rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text);
+      }
+      .btn.primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        border-color: transparent;
+        box-shadow: 0 0.75rem 2rem rgba(91, 140, 255, 0.35);
+      }
+      .btn:hover {
+        filter: brightness(1.08);
+      }
+      .btn:focus-visible,
+      .copy:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.9rem;
+      }
+      .install {
+        margin: 2rem auto 0;
+        max-width: 46rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        padding: 1rem 1rem 1rem 1.25rem;
+        text-align: left;
+      }
+      .install-label {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+      .cmd {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .cmd code {
+        flex: 1;
+        min-width: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        font:
+          0.92rem ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+        color: #d7ddff;
+        padding: 0.35rem 0;
+      }
+      .copy {
+        flex: none;
+        border: 1px solid var(--line);
+        background: var(--surface-2);
+        color: var(--text);
+        border-radius: 0.55rem;
+        padding: 0.45rem 0.8rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+      .shot {
+        margin: 3.5rem auto 0;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.55);
+      }
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      section {
+        padding: 4.5rem 0 0;
+      }
+      h2 {
+        font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+        letter-spacing: -0.02em;
+        margin: 0 0 0.5rem;
+      }
+      .sub {
+        color: var(--muted);
+        margin: 0 0 2rem;
+        max-width: 44rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        gap: 1rem;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        padding: 1.25rem;
+      }
+      .card h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.05rem;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .pair {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .pair figure {
+        margin: 0;
+      }
+      .pair figcaption {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.6rem;
+      }
+      .pair .shot {
+        margin: 0;
+      }
+      ol.steps {
+        counter-reset: step;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.75rem;
+      }
+      ol.steps li {
+        counter-increment: step;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        padding: 1rem 1.25rem 1rem 3.4rem;
+        position: relative;
+      }
+      ol.steps li::before {
+        content: counter(step);
+        position: absolute;
+        left: 1.1rem;
+        top: 1rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        background: var(--surface-2);
+        display: grid;
+        place-items: center;
+        font-size: 0.8rem;
+        font-weight: 650;
+      }
+      ol.steps code,
+      .card code {
+        font:
+          0.85rem ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+        background: var(--surface-2);
+        border-radius: 0.35rem;
+        padding: 0.1rem 0.35rem;
+        overflow-wrap: anywhere;
+      }
+      footer {
+        color: var(--muted);
+        font-size: 0.9rem;
+        padding: 4rem 0 3rem;
+        text-align: center;
+      }
+      @media (max-width: 760px) {
+        .pair {
+          grid-template-columns: 1fr;
+        }
+        nav {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="brand" href="#">
+          <img src="assets/orbit-icon.svg" alt="" />
+          Orbit Code
+        </a>
+        <nav aria-label="Seite">
+          <a href="#funktionen">Funktionen</a>
+          <a href="#umstieg">Von T3 Code</a>
+          <a href="#installieren">Installieren</a>
+          <a href="https://github.com/joelsommerer/orbit-code-releases/releases">Versionen</a>
+        </nav>
+      </header>
+
+      <main>
+        <div class="hero">
+          <img class="logo" src="assets/orbit-icon.svg" alt="Orbit Code" />
+          <h1>Mission Control für deine Coding-Agenten</h1>
+          <p class="lead">
+            Claude Code, Codex und weitere Agenten in einer App. Du siehst auf einen Blick, wer
+            arbeitet, wer auf dich wartet und wo etwas schiefging, über alle Projekte und Rechner
+            hinweg.
+          </p>
+          <div class="cta">
+            <a class="btn primary" id="download" href="https://github.com/joelsommerer/orbit-code-releases/releases/latest">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Für Mac herunterladen
+            </a>
+            <a class="btn" href="#installieren">Mit einer Zeile installieren</a>
+          </div>
+          <p class="meta" id="release-meta">Beta für Macs mit Apple-Chip (M1 oder neuer)</p>
+
+          <div class="install">
+            <div class="install-label">Im Terminal einfügen, installiert und startet Orbit Code:</div>
+            <div class="cmd">
+              <code id="cmd">curl -fsSL https://joelsommerer.github.io/orbit-code-releases/install.sh | sh</code>
+              <button class="copy" type="button" data-copy="cmd">Kopieren</button>
+            </div>
+          </div>
+
+          <div class="shot">
+            <img src="assets/full-agents.jpg" width="1440" height="940" alt="Orbit Code mit Mission Control und dem Agenten-Büro: Jeder Chat ist ein Roboter, die arbeitenden stehen an den Schreibtischen, die fertigen in der Lounge." />
+          </div>
+        </div>
+
+        <section id="funktionen">
+          <h2>Was Orbit Code kann</h2>
+          <p class="sub">Orbit Code baut auf T3 Code auf und ergänzt alles, was du brauchst, wenn mehrere Agenten gleichzeitig für dich arbeiten.</p>
+          <div class="grid">
+            <div class="card">
+              <h3>Mission Control</h3>
+              <p>Kennzahlen, Verlauf, ein Board nach Status, Projekte und Rechner. Ist kein Chat offen, ist das deine Startseite.</p>
+            </div>
+            <div class="card">
+              <h3>Agenten-Büro in 3D</h3>
+              <p>Jeder Chat ist ein Roboter. Wo er steht, zeigt, was er tut: arbeiten, auf dich warten, einen Plan vorlegen oder pausieren.</p>
+            </div>
+            <div class="card">
+              <h3>Jeder fertige Chat braucht dich</h3>
+              <p>Ein fertiger Agent schliesst mit einer kurzen Übergabe: was erledigt ist, was offen ist, wie es weitergeht. Bis du antwortest oder ihn settlest, steht er auf Input.</p>
+            </div>
+            <div class="card">
+              <h3>Seitenleiste nach deinem Arbeiten</h3>
+              <p>Als Liste, nach Projekten oder Host → Projekt → Chats. Sortierung und Statusfilter pro Projekt, ganze Projekte settlen.</p>
+            </div>
+            <div class="card">
+              <h3>Unteraufgaben im Baum</h3>
+              <p>Subagenten und delegierte Aufgaben erscheinen eingerückt unter dem Chat, der sie gestartet hat.</p>
+            </div>
+            <div class="card">
+              <h3>Memory-Graph</h3>
+              <p>Die Notizen deiner Agenten als Netz im Raum: drehen, hineinfliegen, suchen und den Text jeder Notiz lesen.</p>
+            </div>
+          </div>
+          <div class="pair">
+            <figure>
+              <div class="shot"><img src="assets/mc-overview.jpg" width="1440" height="940" loading="lazy" alt="Die Übersicht von Mission Control mit Kennzahlen, neuen Chats pro Tag, Chats nach Status und letzter Aktivität." /></div>
+              <figcaption>Die Übersicht: was wartet, was läuft, was schiefging.</figcaption>
+            </figure>
+            <figure>
+              <div class="shot"><img src="assets/subtasks-open.jpg" width="520" height="700" loading="lazy" alt="Die Seitenleiste mit einem Chat und seinen zwei Subagenten im Baum darunter." /></div>
+              <figcaption>Subagenten im Baum unter ihrem Chat.</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section id="umstieg">
+          <h2>Umstieg von T3 Code</h2>
+          <p class="sub">
+            Findet Orbit beim ersten Start T3 Code auf deinem Mac, bietet es an, alles zu übernehmen:
+            Projekte, Chats mit Verlauf, Provider, Einstellungen, Tastenkürzel und verbundene Rechner.
+            Ein Klick, und du arbeitest dort weiter, wo du warst. T3 Code bleibt unverändert, du kannst
+            jederzeit zurück. Später geht es auch über das Menü <strong>Orbit → Take Over from T3 Code…</strong>
+          </p>
+        </section>
+
+        <section id="installieren">
+          <h2>Installieren</h2>
+          <p class="sub">Orbit Code ist eine Beta für Macs mit Apple-Chip. Du brauchst mindestens einen angemeldeten Agenten, zum Beispiel <a href="https://claude.com/product/claude-code">Claude Code</a> oder die <a href="https://developers.openai.com/codex/cli">Codex CLI</a>.</p>
+          <div class="grid">
+            <div class="card">
+              <h3>Mit einer Zeile (empfohlen)</h3>
+              <p>Im Terminal einfügen. Lädt die neueste Version, legt sie in <em>Programme</em> und startet sie. Für Updates einfach erneut ausführen.</p>
+              <div class="cmd" style="margin-top: 0.75rem">
+                <code id="cmd2">curl -fsSL https://joelsommerer.github.io/orbit-code-releases/install.sh | sh</code>
+                <button class="copy" type="button" data-copy="cmd2">Kopieren</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Von Hand</h3>
+              <ol class="steps" style="margin-top: 0.75rem">
+                <li><a href="https://github.com/joelsommerer/orbit-code-releases/releases/latest">Neueste Version</a> laden und entpacken.</li>
+                <li><code>Orbit (Beta).app</code> in <em>Programme</em> ziehen.</li>
+                <li>Weil die App noch nicht signiert ist, einmal im Terminal freigeben: <code>xattr -dr com.apple.quarantine "/Applications/Orbit (Beta).app"</code></li>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        Orbit Code ist eine Beta und noch nicht von Apple signiert. Es baut auf
+        <a href="https://github.com/pingdotgg/t3code">T3 Code</a> auf (MIT) und ist kein Produkt von T3 Tools.
+        <br />
+        <a href="https://github.com/joelsommerer/orbit-code-releases/issues/new">Problem melden</a> ·
+        <a href="https://github.com/joelsommerer/orbit-code-releases/releases">Alle Versionen</a>
+      </footer>
+    </div>
+
+    <script>
+      for (const button of document.querySelectorAll("[data-copy]")) {
+        button.addEventListener("click", async () => {
+          const text = document.getElementById(button.dataset.copy).textContent;
+          try {
+            await navigator.clipboard.writeText(text);
+            button.textContent = "Kopiert";
+          } catch {
+            button.textContent = "Bitte markieren";
+          }
+          setTimeout(() => (button.textContent = "Kopieren"), 1800);
+        });
+      }
+      // Point the button straight at the newest download and name its version.
+      fetch("https://api.github.com/repos/joelsommerer/orbit-code-releases/releases/latest")
+        .then((response) => (response.ok ? response.json() : null))
+        .then((release) => {
+          if (!release) return;
+          const asset = (release.assets || []).find((entry) => /-arm64\.zip$/.test(entry.name));
+          if (asset) document.getElementById("download").href = asset.browser_download_url;
+          const date = new Date(release.published_at).toLocaleDateString("de-CH");
+          document.getElementById("release-meta").textContent =
+            `${release.name || release.tag_name} vom ${date} · Beta für Macs mit Apple-Chip (M1 oder neuer)`;
+        })
+        .catch(() => {});
+    </script>
+  </body>
+</html>

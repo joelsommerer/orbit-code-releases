@@ -9,15 +9,20 @@ Dieses Repo enthält nur die Downloads. Die App ist eine **Beta** und **nicht vo
 
 ## Installieren (Mac mit Apple-Chip)
 
-1. Unter [Releases](../../releases/latest) die Datei `Orbit-0.1.9-arm64.zip` herunterladen.
-2. Entpacken und `Orbit (Beta).app` in den Ordner **Programme** ziehen.
-3. Weil die App nicht signiert ist, blockiert macOS sie zuerst. Einmal im Terminal ausführen:
+Website: **https://joelsommerer.github.io/orbit-code-releases/**
 
-   ```bash
-   xattr -dr com.apple.quarantine "/Applications/Orbit (Beta).app"
-   ```
+Am einfachsten im Terminal einfügen. Das lädt die neueste Version, legt sie in **Programme** und startet sie:
 
-4. Orbit starten.
+```bash
+curl -fsSL https://joelsommerer.github.io/orbit-code-releases/install.sh | sh
+```
+
+Von Hand: Unter [Releases](../../releases/latest) `Orbit-<version>-arm64.zip` laden, entpacken,
+`Orbit (Beta).app` in **Programme** ziehen und einmal freigeben, weil die App nicht signiert ist:
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/Orbit (Beta).app"
+```
 
 ## Von T3 Code umsteigen
 
@@ -27,5 +32,5 @@ Später geht das im Menü **Orbit → Take Over from T3 Code…**.
 
 ## Aktualisieren
 
-Es gibt noch keine automatischen Updates. Orbit beenden (Cmd+Q), die neue Version wie oben
-installieren und den `xattr`-Befehl erneut ausführen. Deine Daten in `~/.orbit` bleiben erhalten.
+Den Installer-Befehl erneut ausführen; er beendet Orbit, ersetzt die App und startet sie neu.
+Deine Daten in `~/.orbit` bleiben erhalten.
